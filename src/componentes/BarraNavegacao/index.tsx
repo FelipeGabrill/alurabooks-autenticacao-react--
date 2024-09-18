@@ -3,6 +3,7 @@ import BotaoNavegacao from "../BotaoNavegacao"
 import logo from './assets/logo.png'
 import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
+import ModalCadastroUsuario from "../ModalCadastroUsuario"
 
 const BarraNavegacao = () => {
     return (<nav className="ab-navbar">
@@ -53,6 +54,7 @@ const BarraNavegacao = () => {
                     textoAltSrc="Icone representando um usuário"
                     imagemSrc={usuario}
                 />
+                <ModalCadastroUsuario />
             </li>
         </ul>
     </nav>)
