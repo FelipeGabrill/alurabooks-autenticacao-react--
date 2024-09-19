@@ -4,7 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import './ModalCadastroUsuario.css';
 
-const ModalCadastroUsuario = () => {
+interface PropsModalCadastroUsuario {
+    aberta: boolean
+    aoFechar: () => void
+}
+
+const ModalCadastroUsuario = ({aberta, aoFechar} : PropsModalCadastroUsuario) => {
 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -35,6 +40,7 @@ const ModalCadastroUsuario = () => {
                 setCep('')
                 setSenha('')
                 setConfirmarSenha('')
+                aoFechar()
             }).catch(() => {
                 alert('OPS, algo deu errado!')
             })
@@ -42,8 +48,8 @@ const ModalCadastroUsuario = () => {
 
     return (<AbModal
         titulo="Cadastrar"
-        aberta={true}
-        aoFechar={() => console.log('Fechar')}
+        aberta={aberta}
+        aoFechar={aoFechar}
     >
         <div className='corpoModalCadastro'>
             <figure>
