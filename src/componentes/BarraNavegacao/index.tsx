@@ -5,10 +5,18 @@ import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
 import { useState } from "react"
+import ModalLoginUsuario from "../ModalLoginUsuario"
 
 const BarraNavegacao = () => {
 
     const [modalCadastroAberta, setModalCadastroAberta] = useState(false)
+    const [modalLoginUsuario, setModalLoginAberta] = useState(false)
+    const [usuarioEstaLogado, setUsuarioEstaLogado] = useState(false)
+
+    const aoEfetuarLogin = () => {
+        setUsuarioEstaLogado(true)
+        setModalLoginAberta(false)
+    }
 
     return (<nav className="ab-navbar">
         <h1 className="logo">
@@ -50,7 +58,17 @@ const BarraNavegacao = () => {
         </ul>
         <ul className="acoes">
             <li>
-                <BotaoNavegacao texto="Login" textoAltSrc="Icone representando um usuário" imagemSrc={usuario} />
+                <BotaoNavegacao
+                    texto="Login"
+                    textoAltSrc="Icone representando um usuário"
+                    imagemSrc={usuario}
+                    onClick={() => setModalLoginAberta(true)}
+                />
+                <ModalLoginUsuario 
+                    aberta={modalLoginUsuario} 
+                    aoFechar={() => setModalLoginAberta(false)}
+                    aoEfetuarLogin={aoEfetuarLogin} 
+                />
             </li>
             <li>
                 <BotaoNavegacao
