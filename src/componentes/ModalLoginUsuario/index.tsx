@@ -28,7 +28,7 @@ const ModalLoginUsuario = ({aberta, aoFechar, aoEfetuarLogin} : PropsModalCadast
                 setEmail('')
                 setSenha('')
                 aoFechar()
-            }) .catch(erro => {
+            }).catch(erro => {
                 if (erro?.response?.data?.message) {
                     alert(erro.response.data.message)
                 } else {
