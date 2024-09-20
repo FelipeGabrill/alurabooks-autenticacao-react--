@@ -11,13 +11,9 @@ const Pedidos = () => {
     const [pedidos,setPedidos] = useState<IPedido[]>([])
 
     useEffect(() => {
-        const token = sessionStorage.getItem('token')
-        http.get<IPedido[]>('/pedidos', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(resposta => setPedidos(resposta.data))
-        .catch(erro => console.log(erro))
+        http.get<IPedido[]>('/pedidos')
+            .then(resposta => setPedidos(resposta.data))
+            .catch(erro => console.log(erro))
     }, [])
 
     return (
