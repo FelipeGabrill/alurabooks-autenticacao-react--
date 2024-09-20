@@ -1,8 +1,8 @@
 import { AbBotao } from "ds-alurabooks"
-import './Pedidos.css'
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { IPedido } from "../../interfaces/IPedido"
+import http from "../../http"
+import './Pedidos.css'
 
 const Pedidos = () => {
 
@@ -12,7 +12,7 @@ const Pedidos = () => {
 
     useEffect(() => {
         const token = sessionStorage.getItem('token')
-        axios.get<IPedido[]>('http://localhost:8000/pedidos', {
+        http.get<IPedido[]>('/pedidos', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
