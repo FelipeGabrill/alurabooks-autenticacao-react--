@@ -4,13 +4,25 @@ import logo from './assets/logo.png'
 import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ModalLoginUsuario from "../ModalLoginUsuario"
+import { ICategoria } from "../../interfaces/ICategoria"
+import http from "../../http"
 
 const BarraNavegacao = () => {
 
     const [modalCadastroAberta, setModalCadastroAberta] = useState(false)
     const [modalLoginUsuario, setModalLoginAberta] = useState(false)
+
+    const [categorias, setCategorias] = useState<ICategoria[]>([])
+
+    useEffect(() => {
+        http.get<ICategoria[]>('categorias') 
+            .then(resposta => {
+                console.log(resposta.data)
+                setCategorias(resposta.data)
+            })
+    }, [])
 
     let navigate = useNavigate()
 
