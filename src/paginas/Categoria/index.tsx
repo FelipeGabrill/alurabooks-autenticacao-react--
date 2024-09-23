@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 const Categoria = () => {
 
     const params = useParams()
-    const { data: categoria, isLoading } = useQuery({queryKey: ['categoriaPorSlug'], queryFn: () => obterCategoriaPorSlug(params.slug || '')})
+    const { data: categoria, isLoading } = useQuery({queryKey: ['categoriaPorSlug', params.slug], queryFn: () => obterCategoriaPorSlug(params.slug || '')})
 
     if (isLoading) {
         return <Loader />
