@@ -1,7 +1,6 @@
 import { AbBotao, AbGrupoOpcao, AbGrupoOpcoes, AbInputQuantidade, AbTag } from "ds-alurabooks"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-import BlocoSobre from "../../componentes/BlocoSobre"
 import Loader from "../../componentes/Loader"
 import TituloPrincipal from "../../componentes/TituloPrincipal"
 import { useLivro } from "../../graphql/livros/hooks"
@@ -14,7 +13,13 @@ const Livro = () => {
 
     const [opcao, setOpcao] = useState<AbGrupoOpcao>()
 
-    const { data, loading } = useLivro(params.slug || '')
+    const { data, loading, error } = useLivro(params.slug || '')
+
+    if (error) {
+        console.log("Ops! Algo deu errado.")
+        console.log(error)
+        return <h1>Ops! Algo inesperado aconteceu.</h1>
+    }
 
     if (loading) {
         return <Loader />
