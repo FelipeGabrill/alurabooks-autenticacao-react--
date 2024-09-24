@@ -14,15 +14,18 @@ const Livro = () => {
 
     const [opcao, setOpcao] = useState<AbGrupoOpcao>()
 
-    const { data} = useLivro(params.slug || '')
+    const { data, loading } = useLivro(params.slug || '')
+
+    if (loading) {
+        return <Loader />
+    }
 
     const opcoes: AbGrupoOpcao[] = data?.livro.opcoesCompra ? data?.livro.opcoesCompra.map(opcao => ({
         id: opcao.id,
         corpo: formatador.format(opcao.preco),
         titulo: opcao.titulo,
         rodape: opcao.formatos ? opcao.formatos.join(',') : ''
-    }))
-        : []
+    })): []
 
     return (
         <section className="livro-detalhe">
