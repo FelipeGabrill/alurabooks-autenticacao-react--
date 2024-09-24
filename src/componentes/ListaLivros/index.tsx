@@ -2,28 +2,15 @@ import { ICategoria } from "../../interfaces/ICategoria"
 import CardLivro from "../CardLivro"
 import './ListaLivros.css'
 import { ILivro } from "../../interfaces/ILivro"
-import { gql, useQuery } from "@apollo/client"
 import { AbBotao, AbCampoTexto } from "ds-alurabooks"
 import { useState } from "react"
+import { useLivros } from "../../graphql/livros/hooks"
 
 interface ListaLivroProps {
     categoria: ICategoria
 }
 
-const OBTER_LIVROS = gql`
-    query ObterLivros($categoriaId: Int, $titulo: String) {
-        livros(categoriaId: $categoriaId, titulo: $titulo) {
-            id,
-            slug,
-            titulo,
-            imagemCapa,
-            opcoesCompra {
-                id, 
-                preco
-            }
-        }
-    }
-`
+
 
 const ListaLivros = ({ categoria } : ListaLivroProps) => {
 
@@ -31,11 +18,7 @@ const ListaLivros = ({ categoria } : ListaLivroProps) => {
 
     const [textoBusca, setTextoDaBusca] = useState('')
 
-    const { data, refetch } = useQuery<{livros : ILivro[]}>(OBTER_LIVROS, {
-        variables: {
-            categoriaId: categoria.id
-        }
-    })
+    const { data, refetch } = useLivros(categoria)
 
     const buscarLivros = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault()
