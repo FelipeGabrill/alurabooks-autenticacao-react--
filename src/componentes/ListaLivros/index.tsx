@@ -1,38 +1,44 @@
 import { ICategoria } from "../../interfaces/ICategoria"
 import CardLivro from "../CardLivro"
 import './ListaLivros.css'
-import { ILivro } from "../../interfaces/ILivro"
-import { AbBotao, AbCampoTexto } from "ds-alurabooks"
-import { useState } from "react"
+import { AbCampoTexto } from "ds-alurabooks"
+import { useEffect, useState } from "react"
 import { useLivros } from "../../graphql/livros/hooks"
 import { useReactiveVar } from "@apollo/client"
-import { FiltroDeLivrosVar, livrosVar } from "../../graphql/livros/state"
+import { filtroDeLivrosVar, livrosVar } from "../../graphql/livros/state"
 
 interface ListaLivroProps {
     categoria: ICategoria
 }
 
-const ListaLivros = ({ categoria } : ListaLivroProps) => {
+const ListaLivros = ({ categoria }: ListaLivroProps) => {
 
     const [textoBusca, setTextoDaBusca] = useState('')
 
-    FiltroDeLivrosVar({
-        categoria,
-    })
+    useEffect(() => {
+        filtroDeLivrosVar({
+            ...filtroDeLivrosVar(),
+            titulo: textoBusca.length >= 3 ? textoBusca : ''
+        })
+    }, [textoBusca])
+
+    useEffect(() => {
+        filtroDeLivrosVar({
+            ...filtroDeLivrosVar(),
+            categoria,
+        })
+    }, [categoria])
 
     const livros = useReactiveVar(livrosVar);
-    
+
     useLivros()
 
     return <section>
-        <form style={{maxWidth: '80%', margin: '0 auto', textAlign: 'center'}}>
+        <form style={{ maxWidth: '80%', margin: '0 auto', textAlign: 'center' }}>
             <AbCampoTexto value={textoBusca} onChange={setTextoDaBusca} placeholder="Digite o título" />
-            <div style={{marginTop: '16px'}}>
-                <AbBotao texto="Buscar"/>
-            </div>
         </form>
         <div className="livros">
-            {livros.map(livro => <CardLivro livro={livro} key={livro.id}/>)}
+            {livros.map(livro => <CardLivro livro={livro} key={livro.id} />)}
         </div>
     </section>
 }

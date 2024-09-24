@@ -7,6 +7,6 @@ interface FiltroDeLivros {
     titulo?: string
 }
 
-export const FiltroDeLivrosVar= makeVar<FiltroDeLivros>({})
+export const filtroDeLivrosVar= makeVar<FiltroDeLivros>({})
 
 export const livrosVar = makeVar<ILivro[]>([])
