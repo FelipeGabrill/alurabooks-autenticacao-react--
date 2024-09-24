@@ -7,6 +7,7 @@ import { useLivro } from "../../graphql/livros/hooks"
 import { formatador } from "../../utils/formatador-moeda"
 
 import './Livro.css'
+import BlocoSobre from "../../componentes/BlocoSobre"
 
 const Livro = () => {
     const params = useParams()
@@ -61,6 +62,10 @@ const Livro = () => {
                             </div>
                         </footer>
                     </div>
+                </div>
+                <div>
+                    <BlocoSobre titulo="Sobre o Autor" corpo={data?.livro.autor.sobre}/>
+                    <BlocoSobre titulo="Sobre o Livro" corpo={data?.livro.sobre}/>
                 </div>
             </div>
         </section>
