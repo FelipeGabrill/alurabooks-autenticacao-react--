@@ -23,19 +23,15 @@ const ListaLivros = ({ categoria } : ListaLivroProps) => {
     const livros = useReactiveVar(livrosVar);
     console.log('Livros - ', livros)
 
-    const { data, refetch } = useLivros(categoria)
-
-    if (data?.livros) {
-        livrosVar(data.livros)
-    }
+    useLivros(categoria)
 
     const buscarLivros = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault()
         if (textoBusca) {
-            refetch({
-                categoriaId: categoria.id,
-                titulo: textoBusca
-            })
+            //refetch({
+            //  categoriaId: categoria.id,
+            // titulo: textoBusca
+            //})
         }
     }
 
@@ -47,7 +43,7 @@ const ListaLivros = ({ categoria } : ListaLivroProps) => {
             </div>
         </form>
         <div className="livros">
-            {data?.livros.map((livro: ILivro) => <CardLivro livro={livro} key={livro.id}/>)}
+            {livros.map(livro => <CardLivro livro={livro} key={livro.id}/>)}
         </div>
     </section>
 }
