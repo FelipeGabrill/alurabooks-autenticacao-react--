@@ -1,5 +1,5 @@
 import { ICarrinho } from "../../interfaces/ICarrinho";
-import { createContext, ReactElement } from "react";
+import { createContext, ReactElement, useContext } from "react";
 
 export interface ICarrinhoContext {
     carrinho?: ICarrinho
@@ -24,6 +24,10 @@ const CarrinhoProvider = ({ children }: CarrinhoProviderProps) => {
             {children}
         </CarrinhoContext.Provider>
     )
+}
+
+export const useCarrinhoContext = () => {
+    return useContext<ICarrinhoContext>(CarrinhoContext)
 }
 
 export default CarrinhoProvider
