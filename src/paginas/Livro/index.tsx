@@ -1,13 +1,13 @@
 import { AbBotao, AbGrupoOpcao, AbGrupoOpcoes, AbInputQuantidade, AbTag } from "ds-alurabooks"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
+import BlocoSobre from "../../componentes/BlocoSobre"
 import Loader from "../../componentes/Loader"
 import TituloPrincipal from "../../componentes/TituloPrincipal"
 import { useLivro } from "../../graphql/livros/hooks"
 import { formatador } from "../../utils/formatador-moeda"
 
 import './Livro.css'
-import BlocoSobre from "../../componentes/BlocoSobre"
 
 const Livro = () => {
     const params = useParams()
@@ -17,11 +17,11 @@ const Livro = () => {
     const { data, loading, error } = useLivro(params.slug || '')
 
     if (error) {
-        console.log("Ops! Algo deu errado.")
+        console.log('Alguma coisa deu errada')
         console.log(error)
-        return <h1>Ops! Algo inesperado aconteceu.</h1>
+        return <h1>Ops! Algum erro inesperado aconteceu</h1>
     }
-
+    
     if (loading) {
         return <Loader />
     }
@@ -31,7 +31,8 @@ const Livro = () => {
         corpo: formatador.format(opcao.preco),
         titulo: opcao.titulo,
         rodape: opcao.formatos ? opcao.formatos.join(',') : ''
-    })): []
+    }))
+        : []
 
     return (
         <section className="livro-detalhe">
@@ -64,8 +65,11 @@ const Livro = () => {
                     </div>
                 </div>
                 <div>
-                    <BlocoSobre titulo="Sobre o Autor" corpo={data?.livro.autor.sobre}/>
-                    <BlocoSobre titulo="Sobre o Livro" corpo={data?.livro.sobre}/>
+                    <BlocoSobre titulo="Sobre o Autor" corpo={data?.livro.autor.sobre} />
+                    <BlocoSobre titulo="Sobre o Livro" corpo={data?.livro.sobre} />
+                </div>
+                <div className="tags">
+                    {data?.livro.tags?.map(tag => <AbTag contexto="secundario" key={tag.nome} texto={tag.nome}/>)}
                 </div>
             </div>
         </section>
